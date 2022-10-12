@@ -1,4 +1,4 @@
-# Bybit Keyboard Hotkey Auto TP
+# Bybit Keyboard Hotkey Auto Take Profit
 
 Side project which is a performance tool for trading on the cryptocurrency exchange Bybit. With customizable hotkeys, orders and percentage to take profit, you are able to press a designated hotkey to place quick orders on the exchange.
 
