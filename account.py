@@ -91,6 +91,7 @@ class Account():
 
     def set_scaling_tp(account):
         try:
+            order_side = None
             if (account.active_position_list['result'][0]['size'] == 0):
                 entry = float(account.active_position_list['result'][1]['entry_price'])
                 side = account.active_position_list['result'][1]['side']
@@ -104,7 +105,7 @@ class Account():
             positions = []
 
             #determine the positions to sell everything
-            order_side = None
+            
             if (side) == 'Buy':
                 top = entry * (account.position_tp_percentage / 100 + 1)
                 diff = top - entry
