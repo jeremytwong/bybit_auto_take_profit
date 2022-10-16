@@ -96,12 +96,12 @@ class Account():
                 entry = float(account.active_position_list['result'][1]['entry_price'])
                 side = account.active_position_list['result'][1]['side']
                 size = float(account.active_position_list['result'][1]['size'])
-                order_side = 'Sell'
+                order_side = 'Buy'
             else:
                 entry = float(account.active_position_list['result'][0]['entry_price'])
                 side = account.active_position_list['result'][0]['side']
                 size = float(account.active_position_list['result'][0]['size'])
-                order_side = 'Buy'
+                order_side = 'Sell'
             positions = []
 
             #determine the positions to sell everything
