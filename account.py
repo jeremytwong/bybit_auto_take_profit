@@ -91,9 +91,16 @@ class Account():
 
     def set_scaling_tp(account):
         try:
-            entry = float(account.active_position_list['result'][0]['entry_price'])
-            side = account.active_position_list['result'][0]['side']
-            size = float(account.active_position_list['result'][0]['size'])
+            if (account.active_position_list['result'][0]['size'] == 0):
+                entry = float(account.active_position_list['result'][1]['entry_price'])
+                side = account.active_position_list['result'][1]['side']
+                size = float(account.active_position_list['result'][1]['size'])
+                order_side = 'Sell'
+            else:
+                entry = float(account.active_position_list['result'][0]['entry_price'])
+                side = account.active_position_list['result'][0]['side']
+                size = float(account.active_position_list['result'][0]['size'])
+                order_side = 'Buy'
             positions = []
 
             #determine the positions to sell everything
@@ -105,23 +112,20 @@ class Account():
                 for i in range(1, int(account.number_of_positions) + 1):
                     entry += amount_to_increase
                     positions.append(round(entry, account.sig_dig))
-                order_side = 'Sell'
+                
             elif (side) == 'Sell':
                 bottom = entry * (float(1 - account.position_tp_percentage / 100))
                 diff = entry - bottom
-                amount_to_increase = round(diff / int(account.number_of_positions))    
+                amount_to_increase = diff / int(account.number_of_positions)  
                 for i in range(1, int(account.number_of_positions) + 1):
                     entry -= amount_to_increase
                     positions.append(round(entry, account.sig_dig))
-                order_side = 'Buy'
-
             amount_to_sell = round(size / float(account.number_of_positions), account.sig_dig)
 
             if (amount_to_sell < float(account.min_price)) or (amount_to_increase < float(account.min_step)):
                 account.debug.append('increase size or decrease number of positions in config.ini')
                 return False
             else:
-                print(positions)
                 for i in range(0, int(account.number_of_positions)):
                     account.orders.append((amount_to_sell, positions[i]))
                     account.http_client.place_active_order(
