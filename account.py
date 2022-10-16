@@ -109,6 +109,7 @@ class Account():
             if (side) == 'Buy':
                 top = entry * (account.position_tp_percentage / 100 + 1)
                 diff = top - entry
+                entry = top
                 amount_to_increase = diff / int(account.number_of_positions)    
                 for i in range(1, int(account.number_of_positions) + 1):
                     entry += amount_to_increase
@@ -117,6 +118,7 @@ class Account():
             elif (side) == 'Sell':
                 bottom = entry * (float(1 - account.position_tp_percentage / 100))
                 diff = entry - bottom
+                entry = bottom
                 amount_to_increase = diff / int(account.number_of_positions)  
                 for i in range(1, int(account.number_of_positions) + 1):
                     entry -= amount_to_increase
